@@ -1,0 +1,11 @@
+---
+# handlers file for lshake.caddy
+
+- name: systemd daemon reload
+  systemd:
+    daemon_reload: true
+
+- name: restart caddy
+  service:
+    name: "{{ caddy_service_name }}"
+    state: restarted

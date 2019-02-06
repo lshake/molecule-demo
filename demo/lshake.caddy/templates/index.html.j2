@@ -1,0 +1,18 @@
+<html>
+<head>
+<title>
+Response from : {{ ansible_fqdn }}
+</title>
+</head>
+<body>
+<h1>
+Caddy Test Page
+</h1>
+Response from : {{ ansible_fqdn }} /
+{% if ansible_default_ipv4 is defined %}
+{{ ansible_default_ipv4.address }}
+{% else %}
+No ansible_default_ipv4
+{% endif %}
+</body>
+</html>

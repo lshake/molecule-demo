@@ -1,0 +1,82 @@
+---
+# tasks file for lshake.caddy
+
+- name: display version information
+  debug:
+    msg: "Python Version : {{ ansible_python_version }}.  Ansible Version: {{ ansible_version.full }}"
+
+- name: Create user group
+  group:
+    name: "{{ caddy_group }}"
+    state: present
+
+- name: Create user
+  user:
+    name: "{{ caddy_user }}"
+    group: "{{ caddy_group }}"
+    shell: /sbin/nologin
+    home: "{{ caddy_docroot }}"
+    create_home: false
+    password: '*'
+
+- name: Create docroot
+  file:
+    state: directory
+    path: "{{ caddy_docroot }}"
+    owner: "{{ caddy_user }}"
+    group: "{{ caddy_group }}"
+    mode: 0775
+
+- name: Create install dir
+  file:
+    state: directory
+    path: "{{ caddy_install_path }}"
+    owner: "root"
+    group: "root"
+    mode: 0755
+
+- name: Download caddy
+  unarchive:
+    src: "{{ caddy_download_url }}"
+    dest: "{{ caddy_install_path }}"
+    remote_src: true
+    owner: "root"
+    group: "root"
+  notify:
+    - restart caddy
+
+- name: Create config dirs
+  file:
+    state: directory
+    path: "{{ item }}"
+    owner: "{{ caddy_user }}"
+    group: "{{ caddy_group }}"
+    mode: 0755
+  with_items:
+    - "{{ caddy_config_path }}"
+    - "{{ caddy_ssl_path }}"
+    - "{{ caddy_log_path }}"
+
+- name: Install caddyfile
+  template:
+    src: caddyfile.j2
+    dest: "{{ caddy_config_path }}/{{ caddy_config_file}}"
+    owner: "{{ caddy_user }}"
+    group: "{{ caddy_group }}"
+  notify:
+    - restart caddy
+
+- name: Install tesst page
+  template:
+    src: index.html.j2
+    dest: "{{ caddy_docroot }}/index.html"
+    owner: "{{ caddy_user }}"
+    group: "{{ caddy_group }}"
+
+- name: Install caddy service
+  template:
+    src: "caddy.service.systemd.j2"
+    dest: "/lib/systemd/system/caddy.service"
+  notify:
+    - systemd daemon reload
+    - restart caddy

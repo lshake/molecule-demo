@@ -1,0 +1,16 @@
+---
+# defaults file for lshake.caddy
+
+caddy_user: caddy
+caddy_group: caddy
+caddy_docroot: /var/www/caddy
+caddy_install_path: /opt/caddy
+caddy_port: 80
+caddy_download_url: https://caddyserver.com/download/linux/amd64?plugins=http.authz,http.filebrowser,http.webdav,tls.dns.cloudflare,tls.dns.route53&license=personal&telemetry=off
+caddy_service_name: caddy.service
+caddy_config_file: Caddyfile
+caddy_config_path: "{{ caddy_install_path }}/conf"
+caddy_ssl_path: "{{ caddy_install_path }}/ssl"
+caddy_log_path: "{{ caddy_install_path }}/log"
+caddy_systemd_protect_home: 'true'
+caddy_systemd_protect_system: 'full'
