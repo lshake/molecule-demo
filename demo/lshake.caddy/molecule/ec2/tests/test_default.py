@@ -1,4 +1,5 @@
 import os
+import sys
 
 import testinfra.utils.ansible_runner
 
@@ -18,7 +19,10 @@ def test_caddy_docroot_directory(host):
     assert directory.exists
     assert directory.user == 'caddy'
     assert directory.group == 'caddy'
-    assert oct(directory.mode) == '0775'
+    if sys.version_info[0] <= (2):
+        assert oct(directory.mode) == '0775'
+    else:
+        assert oct(directory.mode) == '0o775'
     assert directory.is_directory
 
 
@@ -27,7 +31,10 @@ def test_caddy_binary_directory(host):
     assert directory.exists
     assert directory.user == 'root'
     assert directory.group == 'root'
-    assert oct(directory.mode) == '0755'
+    if sys.version_info[0] <= (2):
+        assert oct(directory.mode) == '0755'
+    else:
+        assert oct(directory.mode) == '0o755'
     assert directory.is_directory
 
 
@@ -36,7 +43,10 @@ def test_caddy_binary(host):
     assert bin.exists
     assert bin.user == 'root'
     assert bin.group == 'root'
-    assert oct(bin.mode) == '0755'
+    if sys.version_info[0] <= (2):
+        assert oct(bin.mode) == '0755'
+    else:
+        assert oct(bin.mode) == '0o755'
     assert bin.is_file
 
 
@@ -48,12 +58,12 @@ def test_caddy_user(host):
     assert user.gid != 0
     assert user.group == "caddy"
     assert user.shell == "/sbin/nologin"
-    assert user.home == "/var/www/caddy"
+    assert user.home == "/home/caddy"
 
 
 def test_version(host):
     cmd = host.command('/opt/caddy/caddy -version')
-    expected = ('Caddy 0.11.2 (non-commercial use only)')
+    expected = ('Caddy 0.11.3 (non-commercial use only)')
     assert cmd.rc == 0
     assert expected == cmd.stdout
 

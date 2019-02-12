@@ -15,9 +15,9 @@
     name: "{{ caddy_user }}"
     group: "{{ caddy_group }}"
     shell: /sbin/nologin
-    home: "{{ caddy_docroot }}"
-    create_home: false
+    home: "{{ caddy_home }}"
     password: '*'
+#    create_home: false
 
 - name: Create docroot
   file:

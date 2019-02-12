@@ -58,7 +58,7 @@ def test_caddy_user(host):
     assert user.gid != 0
     assert user.group == "caddy"
     assert user.shell == "/sbin/nologin"
-    assert user.home == "/var/www/caddy"
+    assert user.home == "/home/caddy"
     assert user.password == "*"
 
 

@@ -3,6 +3,7 @@
 
 - name: systemd daemon reload
   systemd:
+    name: "{{ caddy_service_name }}"
     daemon_reload: true
 
 - name: restart caddy

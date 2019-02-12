@@ -6,7 +6,7 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: caddy-test
+  - name: caddytest
     image: "lshake/${MOLECULE_DISTRIBUTION:-centos7}-systemd:latest"
     command: ${MOLECULE_COMMAND:-""}
     volumes:
@@ -15,10 +15,10 @@ platforms:
     pre_build_image: true
 provisioner:
   name: ansible
-  inventory:
-    host_vars:
-      localhost:
-        ansible_python_interpreter: /usr/bin/python
+  #  inventory:
+  #    host_vars:
+  #      localhost:
+  #        ansible_python_interpreter: /usr/bin/python
   lint:
     name: ansible-lint
 scenario:

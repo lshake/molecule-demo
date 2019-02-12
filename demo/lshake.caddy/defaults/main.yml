@@ -4,6 +4,7 @@
 caddy_user: caddy
 caddy_group: caddy
 caddy_docroot: /var/www/caddy
+caddy_home: /home/caddy
 caddy_install_path: /opt/caddy
 caddy_port: 80
 caddy_download_url: https://caddyserver.com/download/linux/amd64?plugins=http.authz,http.filebrowser,http.webdav,tls.dns.cloudflare,tls.dns.route53&license=personal&telemetry=off
