@@ -68,13 +68,13 @@ def test_version(host):
     assert expected == cmd.stdout
 
 
-def test_response(host):
-    cmd = host.command('curl http://localhost:80/')
-    expected = ('Response from')
-    assert cmd.rc == 0
-    assert expected in cmd.stdout
-
-
 def test_listening(host):
     socket = host.socket('tcp://0.0.0.0:80')
     assert socket.is_listening
+
+
+def test_response(host):
+    cmd = host.command('curl http://localhost:80/.static_test.html')
+    expected = ('Response from')
+    assert cmd.rc == 0
+    assert expected in cmd.stdout
