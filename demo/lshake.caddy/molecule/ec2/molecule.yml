@@ -19,6 +19,9 @@ provisioner:
     group_vars:
       all:
         ansible_python_interpreter: /usr/bin/python
+  config_options:
+    ssh_connection:
+      control_path:
 scenario:
   name: ec2
 verifier:

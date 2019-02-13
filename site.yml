@@ -21,17 +21,6 @@
         state: disabled
       register: selinux
 
-    - name: reboot if changing selinux
-      command: vagrant reload
-      delegate_to: localhost 
-      when: selinux is changed
-
-    - name: wait for vagrant to reboot
-      wait_for: 
-        port: 22
-        delay: 10
-        timeout: 300
-
     - name: create a docker group
       group:
         name: docker
