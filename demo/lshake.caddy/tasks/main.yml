@@ -17,7 +17,6 @@
     shell: /sbin/nologin
     home: "{{ caddy_home }}"
     password: '*'
-#    create_home: false
 
 - name: Create docroot
   file:
@@ -35,9 +34,19 @@
     group: "root"
     mode: 0755
 
-- name: Download caddy
+- name: Download caddy archive
+  get_url:
+    dest: "{{ caddy_home }}/caddy.tgz"
+    url: "{{ caddy_download_url }}"
+    owner: "{{ caddy_user }}"
+    group: "{{ caddy_group }}"
+    mode: 0644
+    timeout: 30
+  register: download_caddy
+
+- name: Unarchive caddy
   unarchive:
-    src: "{{ caddy_download_url }}"
+    src: "{{ caddy_home }}/caddy.tgz"
     dest: "{{ caddy_install_path }}"
     remote_src: true
     owner: "root"
@@ -69,7 +78,7 @@
 - name: Install tesst page
   template:
     src: index.html.j2
-    dest: "{{ caddy_docroot }}/index.html"
+    dest: "{{ caddy_docroot }}/.static_test.html"
     owner: "{{ caddy_user }}"
     group: "{{ caddy_group }}"
 
@@ -80,3 +89,13 @@
   notify:
     - systemd daemon reload
     - restart caddy
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: Test caddy
+  uri:
+    url: "http://{{ ansible_fqdn }}:{{ caddy_port}}/.static_test.html"
+    return_content: true
+  register: caddy_test
+  failed_when: "'Caddy Test Page' not in caddy_test.content"
