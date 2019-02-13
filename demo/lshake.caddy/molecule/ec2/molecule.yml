@@ -6,7 +6,7 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: caddytest
+  - name: instance
     image: ami-3548444c
     instance_type: t2.micro
     vpc_subnet_id: subnet-83addbcb
