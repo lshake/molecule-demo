@@ -43,6 +43,7 @@
           - rh-python36
           - rh-python36-python-devel.x86_64
           - gcc
+          - git
 
     - name: start docker
       service:
