@@ -4,4 +4,3 @@
   become: true
   roles:
     - role: lshake.caddy
-      caddy_download_url: http://10.0.2.2/Caddy/caddy_linux.tar.gz
