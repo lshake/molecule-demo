@@ -9,6 +9,7 @@
 
 # Tox venvs and logs
 .tox
+venv
 
 # vscode 
 .vscode

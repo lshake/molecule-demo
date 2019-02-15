@@ -1,17 +1,9 @@
 ---
 - name: provision a tox/molecule/ansible host
   hosts: all
-  become: true
   roles:
     - role: openstack.redhat-subscription
-      rhsm_username: "{{ lookup('env','RHN_USERNAME') }}"
-      rhsm_password: "{{ lookup('env','RHN_PASSWORD') }}"
-      rhsm_pool_ids: '8a85f99a653df0bf016556cdada338b0'
-      rhsm_repos:
-        - rhel-7-server-rpms
-        - rhel-7-server-extras-rpms
-        - rhel-server-rhscl-7-rpms
-        - rhel-7-server-ansible-2.7-rpms
+      become: true
 
   tasks:
 
@@ -20,15 +12,18 @@
         policy: targeted
         state: disabled
       register: selinux
+      become: true
 
     - name: create a docker group
       group:
         name: docker
+      become: true
 
-    - name: add vagrant to the docker group
+    - name: add {{ ansible_user }} to the docker group
       user:
-        name: vagrant
+        name: "{{ ansible_user }}"
         groups: docker
+      become: true
 
     - name: install python scl packages
       yum:
@@ -44,12 +39,14 @@
           - rh-python36-python-devel.x86_64
           - gcc
           - git
+      become: true
 
     - name: start docker
       service:
         name: docker
         state: started
         enabled: true
+      become: true
 
     - name: install tox
       pip:
@@ -58,32 +55,30 @@
       environment:
         PATH: /opt/rh/rh-python36/root/usr/bin
         LD_LIBRARY_PATH: /opt/rh/rh-python36/root/usr/lib64
+      become: true
 
     - name: set ec2 region
       lineinfile:
-        path: /home/vagrant/.bash_profile
+        path: ~/.bash_profile
         regexp: "^export AWS_REGION="
         line: "export AWS_REGION=eu-west-1"
 
     - name: create aws config folder
       file:
-        path: /home/vagrant/.aws
+        path: ~/.aws
         state: directory
-        owner: vagrant
-        group: vagrant
         mode: 0755
 
     - name: lookup aws credentials
       set_fact:
         aws_access_key_id : "{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
         aws_secret_access_key : "{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
+      no_log: true
 
     - name: copy aws credentials
       copy:
         content: "[default]\naws_access_key_id = {{ aws_access_key_id }}\naws_secret_access_key = {{ aws_secret_access_key }}\n"
-        dest: /home/vagrant/.aws/credentials
-        owner: vagrant
-        group: vagrant
+        dest: ~/.aws/credentials
         mode: 0600
 
     - name: copy aws config
@@ -91,8 +86,6 @@
         content: |
                 [default]
                 region = eu-west-1
-        dest: /home/vagrant/.aws/config
-        owner: vagrant
-        group: vagrant
+        dest: ~/.aws/config
         mode: 0600
 
