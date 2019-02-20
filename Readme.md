@@ -23,9 +23,9 @@ Vagrant Setup Instructions
 
 1. Checkout the repository : git@github.com:lshake/molecule-demo.git
 2. Change to the working directory : `cd molecule-demo`
-3. Check out the ansible role requirements: `ansible-galaxy install -r ./requirements.txt
-1. You *must* set Red Hat Portal credentials, RHN_USERNAME and RHN_PASSWORD and the Pool ID RHN_POOLID as environment variables.  Developer credentials should be sufficient.
-2. If you plan to use AWS EC2 test environments, you should set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY credentials.
+3. Check out the ansible role requirements: `ansible-galaxy install -r ./requirements.txt`
+1. You *must* set Red Hat Portal credentials, `RHN_USERNAME` and `RHN_PASSWORD` and the Pool `ID RHN_POOLID` as environment variables.  Developer credentials should be sufficient.
+2. If you plan to use AWS EC2 test environments, you should set `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` credentials.
 4. Create the vagrant instance: `vagrant up`
 5. Reload the vagrant instance to pick up SELinux changes required for Python3 testing: `vagrant reload` 
 
