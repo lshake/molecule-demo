@@ -1,0 +1,16 @@
+FROM registry.access.redhat.com/rhel7-init
+
+ENV CONTAINER=docker
+
+RUN yum makecache fast \
+&& yum -y install \
+sudo \
+iproute \
+&& yum -y update \
+&& rm -rf /var/cache/yum
+
+RUN sed -i 's/Defaults requiretty/Defaults !requiretty/g' /etc/sudoers
+
+VOLUME ["/sys/fs/cgroup"]
+
+CMD ["/usr/lib/systemd/systemd"]
