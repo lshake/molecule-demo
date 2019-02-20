@@ -7,7 +7,7 @@ lint:
   name: yamllint
 platforms:
   - name: instance
-    image: "${MOLECULE_DISTRIBUTION:-lshake/centos7-systemd}"
+    image: "${MOLECULE_DISTRIBUTION:-registry.access.redhat.com/rhel7-init:latest}"
     command: ${MOLECULE_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
