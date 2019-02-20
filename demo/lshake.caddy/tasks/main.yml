@@ -71,7 +71,7 @@
   notify:
     - restart caddy
 
-- name: Install tesst page
+- name: Install test page
   template:
     src: index.html.j2
     dest: "{{ caddy_docroot }}/.static_test.html"
