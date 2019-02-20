@@ -5,16 +5,16 @@ Use Molecule and Tox to orchestrate Ansible Role testing across Linux Containers
 
 The Demo uses :
 
-a. Vagrant (or an a BYO RHEL7 instance)
-a. Molecule
-a. Tox
-a. Testinfa
-a. SCL Python36
-a. RHEL and CentOS Containers
-a. AWS EC2
-a. Python 2.7 and Python 3.6
-a. Ansible 2.2, 2.4 and 2.7
-a. The Caddy Web Server
+1. Vagrant (or an a BYO RHEL7 instance)
+1. Molecule
+1. Tox
+1. Testinfa
+1. SCL Python36
+1. RHEL and CentOS Containers
+1. AWS EC2
+1. Python 2.7 and Python 3.6
+1. Ansible 2.2, 2.4 and 2.7
+1. The Caddy Web Server
 
 The demo uses Tox to create four python virtualenvs.  Two for python 2.7 using Ansible 2.2 and Ansible 2.7 and two for python 3.6 using Ansible 2.4 and Ansible 2.7.  You can choose any virtualenv to use for interactive role development and testing with Molecule.  A sample role is provided which installs and starts the Caddy web server.  Testinfra tests are provided which can be invoked interactively.
 
