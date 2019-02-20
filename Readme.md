@@ -22,12 +22,12 @@ Vagrant Setup Instructions
 --------------------------
 
 1. Checkout the repository : git@github.com:lshake/molecule-demo.git
-2. Change to the working directory : `cd molecule-demo`
-3. Check out the ansible role requirements: `ansible-galaxy install -r ./requirements.txt`
-1. You *must* set Red Hat Portal credentials, `RHN_USERNAME` and `RHN_PASSWORD` and the Pool `ID RHN_POOLID` as environment variables.  Developer credentials should be sufficient.
-2. If you plan to use AWS EC2 test environments, you should set `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` credentials.
-4. Create the vagrant instance: `vagrant up`
-5. Reload the vagrant instance to pick up SELinux changes required for Python3 testing: `vagrant reload` 
+2. Change to the working directory: `cd molecule-demo`
+3. Check out the ansible role requirements: `ansible-galaxy install -r ./requirements.txt -p ./roles`
+4. You *must* set Red Hat Portal credentials, `RHN_USERNAME` and `RHN_PASSWORD` and the Pool `ID RHN_POOLID` as environment variables.  [Developer](https://developers.redhat.com/) credentials should be sufficient.
+5. If you plan to use AWS EC2 test environments, you should set `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` credentials.
+6. Create the vagrant instance: `vagrant up`
+7. Reload the vagrant instance to pick up SELinux changes required for Python3 testing: `vagrant reload` 
 
 Environment Setup Instructions
 ------------------------------
@@ -51,7 +51,7 @@ Role Development
 Using AWS EC2
 -------------
 
-The above role development cycle uses linux containers which are defined in the default senario of the molecule directory.   You can run the above using AWS EC2 instances by specifying the EC2 senario passed to molecule : `molecule test -s ec2`
+The above role development cycle uses linux containers which are defined in the default senario of the molecule directory.   You can run the above using AWS EC2 instances by specifying the EC2 senario passed to molecule: `molecule test -s ec2`
 
 Using Tox to test multiple versions
 -----------------------------------
@@ -68,3 +68,5 @@ Notes
 
 * SELinux is disabled on the Ansible controller in order to support Python3.  Python3 from software collections does not include libselinux-python3.  This will hopefully no longer be an issue with RHEL8.
 * There are changes to both the EC2 and Docker molecule scenarios to support Ansible 2.2.   TODO.  Provide OOTB examples for Ansible 2.4 and above.
+* Different distributions can be tested locally by setting MOLECULE_DISTRIBUTION : `MOLECULE_DISTRIBUTION=lshake/centos7-systemd molecule test`
+* Debug output for Molecule can be obtained by using the --debug flag : `molecule --debug create`
