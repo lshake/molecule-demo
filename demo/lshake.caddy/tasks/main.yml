@@ -1,10 +1,6 @@
 ---
 # tasks file for lshake.caddy
 
-- name: display version information
-  debug:
-    msg: "Python Version : {{ ansible_python_version }}.  Ansible Version: {{ ansible_version.full }}"
-
 - name: Create user group
   group:
     name: "{{ caddy_group }}"
