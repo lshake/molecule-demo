@@ -2,11 +2,12 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "shakey/rhel7.6"
+  config.vm.box = "generic/rhel7"
   config.vm.hostname = 'ansiblevagrant'
   config.vm.provider "virtualbox" do |v|
     v.memory = 4096
     v.cpus = 2
+  config.vm.synced_folder "demo", "/demo"
   end
   config.vm.provision "ansible" do |ansible|
     ansible.limit = "all"
