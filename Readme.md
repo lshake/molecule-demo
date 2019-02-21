@@ -34,7 +34,7 @@ Environment Setup Instructions
 
 1. Log into the vagrant box: `vagrant ssh`
 2. Enable Python 3 installed from software collections: `scl enable rh-python36 bash`
-3. Change to working directory: `cd demo/lshake.caddy`
+3. Change to working directory: `cd /demo/lshake.caddy`
 4. Build all four python virtual envs: `tox --notests`
 
 Role Development
