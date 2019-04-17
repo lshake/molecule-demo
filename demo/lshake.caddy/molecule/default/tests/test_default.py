@@ -64,7 +64,7 @@ def test_caddy_user(host):
 
 def test_version(host):
     cmd = host.command('/opt/caddy/caddy -version')
-    expected = ('Caddy 0.11.5 (non-commercial use only)')
+    expected = ('Caddy 1.0.0-beta1')
     assert cmd.rc == 0
     assert expected == cmd.stdout
 
