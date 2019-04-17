@@ -39,6 +39,8 @@
     mode: 0644
     timeout: 30
   register: download_caddy
+  retries: 5
+  until: download_caddy is succeeded
 
 - name: Unarchive caddy
   unarchive:
